@@ -38,32 +38,21 @@ class Minesweeper:
         current_row = math.ceil((first_move/self.c)-1)
         if self.level=='e':
             unlock_cells = (self.r*self.c)//4 #cells to be unlocked in first move
-            #k_r = [0,1,-2,-1,4,1,-6]range(2,-2) #direction vectors for row and columns
-            #k_c =[0,1,-2,-1,4,1,-6]range(2,-2)
-            #vector_pairs = [(0,1),(1,0),(1,1),(-1)]
+
         elif self.level=='m':
             unlock_cells = (self.r*self.c)//6
-            #k_r=range(-4,4)
-            #k_c=range(-4,4)
+
         elif self.level=='h':
             unlock_cells = (self.r*self.c)//12
-            #k_r=range(-6,6)
-            #k_c=range(-6,6)
-        #q = []
-        #i=0
-        #q.append((current_row,current_col))
+
         self.user_guide_board[current_row][current_col]=str(self.board[current_row][current_col])
         unlocked_cells = 1
         direction_vectors = [0,1,-1]
         while unlocked_cells<=unlock_cells: #and len(q)>0 :
-            #coordinates=q.pop(0)
-            #x=coordinates[0]
-            #y=coordinates[1]
+
             k_r=random.choice(direction_vectors)
             k_c=random.choice(direction_vectors)
-            #current_row += k_r#[i]
-            #current_col += k_c#[i]
-            #i +=1
+
             if 0<=current_row+k_r<=(self.r-1):
                 current_row += k_r
             else:
@@ -75,7 +64,7 @@ class Minesweeper:
             if self.board[current_row][current_col]== 'M':
                 continue
             if self.user_guide_board[current_row][current_col]== ' ':
-                #q.append((current_row,current_col))
+
                 self.user_guide_board[current_row][current_col]=str(self.board[current_row][current_col])
                 unlocked_cells +=1
 
@@ -107,7 +96,6 @@ class Minesweeper:
         #if current_row,current_col is valid and eligible to unlock we return the row and col
         else:
             self.current_status=True
-            #print('printing output as row or col',(row,col))
             return (row,col)
 
     def valid_cell(self,row,col,eligible_dict,vector_array,vector_counter):
@@ -115,7 +103,6 @@ class Minesweeper:
         #otherwise we recursively check if cells are valid after adding direction vectors and return a valid row,col
         if len(eligible_dict)==0:
             self.current_status=False
-            #print('printing output as current status: ',self.current_status)
             return self.current_status
         #we check if current_row or current_column is in range, else we increase the vector_counter to check next vector in spiral
         #if current_row,current_col is not in not_visited_or_mined, that means we cannot unlock it, so we increase the vector_counter to check next vector in spiral
@@ -125,7 +112,6 @@ class Minesweeper:
         #if current_row,current_col is valid and eligible to unlock we return the row and col
         else:
             self.current_status=True
-            #print('printing output as row or col',(row,col))
             return (row,col)
 
     def update_user_guide_board(self,move,mines,game_iterations):
@@ -181,9 +167,8 @@ class Minesweeper:
                 return_status_or_tuple = self.random_valid_cell(current_row,current_col,not_visited_or_mined,direction_vectors,0)
             else:
                 return_status_or_tuple = self.valid_cell(current_row,current_col,not_visited_or_mined,direction_vectors,0)
-            #print('printing return_status_or_tuple in main function:',return_status_or_tuple)
+
             if return_status_or_tuple==False:
-                #print('Congratulations. You won!')
                 return self.current_status #we abort game if user has won, i.e. eligible list is 0
             else:
                 current_row = return_status_or_tuple[0]
@@ -274,12 +259,11 @@ class Minesweeper:
         current_row = math.ceil((first_move/self.c)-1)
         self.board[current_row][current_col]='P'
         mine_list = random.sample(self.available_moves(),n_mines)
-        #print('mine_list from available moves:',mine_list)
+
         for reference in mine_list:
             current_col= ((reference%self.c)-1) if reference%self.c!=0 else (self.c-1)
             current_row = math.ceil((reference/self.c)-1)
-            #print('ref,row_index:',reference,current_row)
-            #print('ref,col_index:',reference,current_col)
+
             self.board[current_row][current_col]='M'
         return mine_list
 
@@ -301,7 +285,7 @@ class Minesweeper:
 
                     for row_r,col_r in adjacent_index.values():
                         if 0<=row_r<=(self.r-1) and 0<=col_r<=(self.c-1):
-                            #print(row_r,col_r)
+                    
                             if self.board[row_r][col_r] == 'M':
                                 mine_count +=1
                     self.board[row_n][col_n] = mine_count
